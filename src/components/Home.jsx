@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
 const Home = () => {
-    const data = useLoaderData();
+    const rawData = useLoaderData();
+    const [data, setData] = useState(rawData);
+
     console.log(data);
     console.log(
         fetch("../data.json")
@@ -12,22 +14,46 @@ const Home = () => {
             })
     );
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (e.target.search.value) {
+            setData(
+                rawData.filter((element) => {
+                    if (
+                        element.category.toLowerCase() ===
+                        e.target.search.value.toLowerCase()
+                    ) {
+                        return element;
+                    }
+                })
+            );
+        } else {
+            setData(rawData);
+        }
+    };
+
     return (
         <>
             <div className="flex flex-col gap-10 items-center justify-center mb-80">
                 <h1 className="font-bold text-5xl">
                     I Grow By Helping People In Need
                 </h1>
-                <div className="flex justify-start items-center">
+                <form
+                    className="flex justify-start items-center"
+                    onSubmit={handleSubmit}
+                >
                     <input
                         type="text"
                         placeholder="Search here...."
+                        name="search"
                         className="input input-bordered w-full max-w-xs"
                     />
-                    <button className="bg-[#FF444A] inline-block btn btn-neutral">
-                        Search
-                    </button>
-                </div>
+                    <input
+                        type="submit"
+                        value="Search"
+                        className="bg-[#FF444A] inline-block btn btn-neutral"
+                    />
+                </form>
             </div>
             <div className="grid grid-cols-4 gap-6">
                 {data.map((data, index) => (
