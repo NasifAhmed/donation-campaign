@@ -1,13 +1,20 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const Home = () => {
     const data = useLoaderData();
     console.log(data);
+    console.log(
+        fetch("../data.json")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data[1]);
+            })
+    );
 
     return (
         <>
-            <div className="flex flex-col gap-10 items-center justify-center mt-32 mb-80">
+            <div className="flex flex-col gap-10 items-center justify-center mb-80">
                 <h1 className="font-bold text-5xl">
                     I Grow By Helping People In Need
                 </h1>
@@ -23,34 +30,36 @@ const Home = () => {
                 </div>
             </div>
             <div className="grid grid-cols-4 gap-6">
-                {data.map((data) => (
-                    <div
-                        style={{
-                            color: `${data.category_bg}`,
-                        }}
-                        className="card card-compact w-96 bg-base-100 shadow-xl"
-                    >
-                        <figure>
-                            <img src={data.picture} className="w-full" />
-                        </figure>
+                {data.map((data, index) => (
+                    <Link to={`/details/${index}`}>
                         <div
-                            style={{ backgroundColor: `${data.card_bg}` }}
-                            className="card-body"
+                            style={{
+                                color: `${data.category_bg}`,
+                            }}
+                            className="card card-compact w-96 bg-base-100 shadow-xl"
                         >
-                            <h2
-                                style={{
-                                    color: `${data.category_bg}`,
-                                    backgroundColor: `${data.text_button_bg}`,
-                                }}
-                                className="badge font-medium text-sm"
+                            <figure>
+                                <img src={data.picture} className="w-full" />
+                            </figure>
+                            <div
+                                style={{ backgroundColor: `${data.card_bg}` }}
+                                className="card-body"
                             >
-                                {data.category}
-                            </h2>
-                            <h1 className="font-semibold text-xl">
-                                {data.title}
-                            </h1>
+                                <h2
+                                    style={{
+                                        color: `${data.category_bg}`,
+                                        backgroundColor: `${data.text_button_bg}`,
+                                    }}
+                                    className="badge font-medium text-sm"
+                                >
+                                    {data.category}
+                                </h2>
+                                <h1 className="font-semibold text-xl">
+                                    {data.title}
+                                </h1>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </>

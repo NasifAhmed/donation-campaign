@@ -4,7 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import Home from "./components/Home.jsx";
 import Donation from "./components/Donation.jsx";
+import DonationDetails from "./components/DonationDetails.jsx";
 import Statistics from "./components/Statistics.jsx";
+import NotFound from "./components/NotFound.jsx";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -13,6 +15,10 @@ const router = createBrowserRouter([
         element: <App></App>,
         children: [
             {
+                path: "*",
+                element: <NotFound></NotFound>,
+            },
+            {
                 path: "/",
                 element: <Home></Home>,
                 loader: () => fetch("../data.json"),
@@ -20,10 +26,27 @@ const router = createBrowserRouter([
             {
                 path: "/donation",
                 element: <Donation></Donation>,
+                loader: ({ params }) =>
+                    fetch("../data.json")
+                        .then((res) => res.json())
+                        .then((data) => {
+                            return data[params.category_index];
+                        }),
             },
             {
                 path: "/statistics",
                 element: <Statistics></Statistics>,
+                loader: () => fetch("../data.json"),
+            },
+            {
+                path: "/details/:category_index",
+                element: <DonationDetails></DonationDetails>,
+                loader: ({ params }) =>
+                    fetch("../data.json")
+                        .then((res) => res.json())
+                        .then((data) => {
+                            return data[params.category_index];
+                        }),
             },
         ],
     },
