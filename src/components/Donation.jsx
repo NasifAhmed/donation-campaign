@@ -14,7 +14,7 @@ const Donation = () => {
 
     return (
         <div className="flex flex-col gap-6 justify-center items-center">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid xl:grid-cols-2 grid-cols-1 gap-6 items-center justify-center">
                 {donationList.slice(0, donationLength).map((donation) => (
                     <div className="card card-side bg-base-100 shadow-xl w-[648px]">
                         <figure>

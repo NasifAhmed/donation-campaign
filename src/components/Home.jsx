@@ -34,28 +34,34 @@ const Home = () => {
 
     return (
         <>
-            <div className="flex flex-col gap-10 items-center justify-center mb-80">
-                <h1 className="font-bold text-5xl">
-                    I Grow By Helping People In Need
-                </h1>
-                <form
-                    className="flex justify-start items-center"
-                    onSubmit={handleSubmit}
-                >
-                    <input
-                        type="text"
-                        placeholder="Search here...."
-                        name="search"
-                        className="input input-bordered w-full max-w-xs"
-                    />
-                    <input
-                        type="submit"
-                        value="Search"
-                        className="bg-[#FF444A] inline-block btn btn-neutral"
-                    />
-                </form>
+            <div
+                className="hero h-[500px]  mb-14"
+                style={{ backgroundImage: `url('../banner.jpg')` }}
+            >
+                <div className="hero-overlay bg-opacity-95 bg-white"></div>
+                <div className="hero-content flex flex-col gap-10 items-center justify-center">
+                    <h1 className="font-bold text-5xl text-center">
+                        I Grow By Helping People In Need
+                    </h1>
+                    <form
+                        className="flex justify-start items-center"
+                        onSubmit={handleSubmit}
+                    >
+                        <input
+                            type="text"
+                            placeholder="Search here...."
+                            name="search"
+                            className="input input-bordered w-full max-w-xs"
+                        />
+                        <input
+                            type="submit"
+                            value="Search"
+                            className="bg-[#FF444A] inline-block btn btn-neutral"
+                        />
+                    </form>
+                </div>
             </div>
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 gap-6 items-center justify-center">
                 {data.map((data, index) => (
                     <Link to={`/details/${index}`}>
                         <div

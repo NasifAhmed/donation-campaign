@@ -4,7 +4,7 @@ import Home from "./components/Home.jsx";
 
 function App() {
     return (
-        <div className="mx-36 mb-52">
+        <div className="xl:mx-36 lg:mx-20 md:mx-10 mx-5 mb-52">
             <NavBar></NavBar>
             <Outlet></Outlet>
         </div>

@@ -32,7 +32,7 @@ const renderCustomizedLabel = ({
             fill="white"
             textAnchor={x > cx ? "start" : "end"}
             dominantBaseline="central"
-            className="text-4xl font-bold"
+            className="xl:text-4xl font-bold"
         >
             {`${(percent * 100).toFixed(0)}%`}
         </text>
