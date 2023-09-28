@@ -1,21 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import { getDonation } from "../utility/localStorage";
 
 const Donation = () => {
     const data = useLoaderData();
+
+    const donations = getDonation();
+    let donationList = [];
+    donations.map((donationId) => {
+        donationList.push(data[donationId]);
+    });
+    const [donationLength, setDonationLength] = useState(4);
+
     return (
-        <div>
-            <div className="card card-side bg-base-100 shadow-xl">
-                <figure>
-                    <img src={data.picture} alt="Movie" />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title">New movie is released!</h2>
-                    <p>Click the button to watch on Jetflix app.</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Watch</button>
+        <div className="flex flex-col gap-6 justify-center items-center">
+            <div className="grid grid-cols-2 gap-6">
+                {donationList.slice(0, donationLength).map((donation) => (
+                    <div className="card card-side bg-base-100 shadow-xl w-[648px]">
+                        <figure>
+                            <img src={donation.picture} alt="Movie" />
+                        </figure>
+                        <div
+                            style={{
+                                backgroundColor: `${donation.card_bg}`,
+                            }}
+                            className="card-body"
+                        >
+                            <h2
+                                style={{
+                                    color: `${donation.category_bg}`,
+                                    backgroundColor: `${donation.text_button_bg}`,
+                                }}
+                                className="badge font-medium text-sm"
+                            >
+                                {donation.category}
+                            </h2>
+                            <h1 className="font-semibold text-xl">
+                                {donation.title}
+                            </h1>
+                            <p
+                                className="font-semibold"
+                                style={{
+                                    color: `${donation.category_bg}`,
+                                }}
+                            >
+                                {donation.price}
+                            </p>
+                            <button
+                                className="btn btn-neutral text-white w-36"
+                                style={{
+                                    backgroundColor: `${donation.category_bg}`,
+                                }}
+                            >
+                                View Details
+                            </button>
+                        </div>
                     </div>
-                </div>
+                ))}
+            </div>
+            <div className={donationLength >= donationList.length && "hidden"}>
+                <button
+                    onClick={() => setDonationLength(donationList.length)}
+                    className="btn btn-neutral"
+                >
+                    View All
+                </button>
             </div>
         </div>
     );

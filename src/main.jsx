@@ -8,6 +8,7 @@ import DonationDetails from "./components/DonationDetails.jsx";
 import Statistics from "./components/Statistics.jsx";
 import NotFound from "./components/NotFound.jsx";
 import "./index.css";
+import { getDonation } from "./utility/localStorage.js";
 
 const router = createBrowserRouter([
     {
@@ -26,12 +27,7 @@ const router = createBrowserRouter([
             {
                 path: "/donation",
                 element: <Donation></Donation>,
-                loader: ({ params }) =>
-                    fetch("../data.json")
-                        .then((res) => res.json())
-                        .then((data) => {
-                            return data[params.category_index];
-                        }),
+                loader: () => fetch("../data.json"),
             },
             {
                 path: "/statistics",
@@ -45,7 +41,10 @@ const router = createBrowserRouter([
                     fetch("../data.json")
                         .then((res) => res.json())
                         .then((data) => {
-                            return data[params.category_index];
+                            return [
+                                data[params.category_index],
+                                params.category_index,
+                            ];
                         }),
             },
         ],
